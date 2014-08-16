@@ -3,6 +3,7 @@ package br.com.caelum.tdd.exercicio1;
 import static br.com.caelum.tdd.exercicio1.Cargo.DBA;
 import static br.com.caelum.tdd.exercicio1.Cargo.DESENVOLVEDOR;
 import static br.com.caelum.tdd.exercicio1.Cargo.TESTER;
+import static br.com.caelum.tdd.exercicio1.Cargo.GERENTE;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,63 +22,81 @@ public class CalculadoraDeSalarioTest {
 	public void setUp() {
 		calculadora = new CalculadoraDeSalario();
 	}
-	
+
 	@Test
-	public void deveRetornar4000MenosImpostosDe20PorCentoSeDesenvolvedorGanhaMaisDe3000(){
-		Funcionario desenvolvedor = umFuncionario(DESENVOLVEDOR, comSalarioBase(4000.0));
-		
+	public void deveRetornar4000MenosImpostosDe20PorCentoSeDesenvolvedorGanhaMaisDe3000() {
+		Funcionario desenvolvedor = umFuncionario(DESENVOLVEDOR,
+				comSalarioBase(4000.0));
+
 		double salario = calculadora.calcula(desenvolvedor);
-		
+
 		assertEquals(4000.0 * 0.8, salario, 0.000001);
 	}
 
 	@Test
-	public void deveRetornar1000MenosImpostosDe10PorCentoSeDesenvolvedorGanhaMenosDe3000(){
-		Funcionario desenvolvedor = umFuncionario(DESENVOLVEDOR, comSalarioBase(1000.0));
-		
+	public void deveRetornar1000MenosImpostosDe10PorCentoSeDesenvolvedorGanhaMenosDe3000() {
+		Funcionario desenvolvedor = umFuncionario(DESENVOLVEDOR,
+				comSalarioBase(1000.0));
+
 		double salario = calculadora.calcula(desenvolvedor);
-		
+
 		assertEquals(1000.0 * 0.9, salario, 0.000001);
 	}
 
-
 	@Test
-	public void deveRetornar4000MenosImpostosDe25PorCentoSeDBAGanhaMaisDe2000(){
+	public void deveRetornar4000MenosImpostosDe25PorCentoSeDBAGanhaMaisDe2000() {
 		Funcionario dba = umFuncionario(DBA, comSalarioBase(4000.0));
-		
+
 		double salario = calculadora.calcula(dba);
-		
+
 		assertEquals(4000.0 * 0.75, salario, 0.000001);
 	}
 
 	@Test
-	public void deveRetornar1000MenosImpostosDe15PorCentoSeDBAGanhaMenosDe2000(){
+	public void deveRetornar1000MenosImpostosDe15PorCentoSeDBAGanhaMenosDe2000() {
 		Funcionario dba = umFuncionario(DBA, comSalarioBase(1000.0));
-		
+
 		double salario = calculadora.calcula(dba);
-		
+
 		assertEquals(1000.0 * 0.85, salario, 0.000001);
 	}
 
 	@Test
-	public void deveRetornar4000MenosImpostosDe25PorCentoSeTestadorGanhaMaisDe2000(){
+	public void deveRetornar4000MenosImpostosDe25PorCentoSeTestadorGanhaMaisDe2000() {
 		Funcionario testador = umFuncionario(TESTER, comSalarioBase(4000.0));
-		
+
 		double salario = calculadora.calcula(testador);
-		
+
 		assertEquals(4000.0 * 0.75, salario, 0.000001);
 	}
 
 	@Test
-	public void deveRetornar1000MenosImpostosDe15PorCentoSeTestadorGanhaMenosDe2000(){
+	public void deveRetornar1000MenosImpostosDe15PorCentoSeTestadorGanhaMenosDe2000() {
 		Funcionario testador = umFuncionario(TESTER, comSalarioBase(1000.0));
-		
+
 		double salario = calculadora.calcula(testador);
-		
+
 		assertEquals(1000.0 * 0.85, salario, 0.000001);
 	}
-	
-		
+
+	@Test
+	public void deveRetornar1000MenosImpostosDe15PorCentoSeGerenteGanhaMenosDe5000() {
+		Funcionario gerente = umFuncionario(GERENTE, comSalarioBase(4000));
+
+		double salario = calculadora.calcula(gerente);
+
+		assertEquals(1000.0 * 0.85, salario, 0.000001);
+	}
+
+	@Test
+	public void deveRetornar1000MenosImpostosDe20PorCentoSeGerenteGanhaMaisDe5000() {
+		Funcionario gerente = umFuncionario(GERENTE, comSalarioBase(6000));
+
+		double salario = calculadora.calcula(gerente);
+
+		assertEquals(1000.0 * 0.80, salario, 0.000001);
+	}
+
 	private Funcionario umFuncionario(Cargo cargo, double salario) {
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome("Martin Fowler");
@@ -85,7 +104,6 @@ public class CalculadoraDeSalarioTest {
 		funcionario.setCargo(cargo);
 		return funcionario;
 	}
-	
 
 	private double comSalarioBase(double salario) {
 		return salario;
