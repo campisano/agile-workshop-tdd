@@ -20,7 +20,7 @@ public class GeradorDeNotaFiscalTests {
 		dao = mock(NotaFiscalDao.class);
 		sap = mock(EnviadorDeSap.class);
 
-		gerador = new GeradorDeNotaFiscal(email, dao);
+		gerador = new GeradorDeNotaFiscal(email, dao, sap);
 	}
 
 	@Test
