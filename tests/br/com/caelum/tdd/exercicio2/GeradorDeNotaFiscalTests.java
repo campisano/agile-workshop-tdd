@@ -11,40 +11,51 @@ public class GeradorDeNotaFiscalTests {
 	private static final double PRECISAO = 0.00001;
 	private EnviadorDeEmail email;
 	private NotaFiscalDao dao;
+	private EnviadorDeSap sap;
 	private GeradorDeNotaFiscal gerador;
 
 	@Before
 	public void setUp() {
 		email = mock(EnviadorDeEmail.class);
 		dao = mock(NotaFiscalDao.class);
+		sap = mock(EnviadorDeSap.class);
 
 		gerador = new GeradorDeNotaFiscal(email, dao);
 	}
-	
+
 	@Test
 	public void deveGerarNotaCom6PorCentoDeImposto() {
 		Fatura fatura = new Fatura(1000, "cliente 1");
-		
+
 		NotaFiscal nf = gerador.gera(fatura);
-		
+
 		assertEquals(1000 * 0.06, nf.getImpostos(), PRECISAO);
 	}
-	
+
 	@Test
 	public void deveEnviarEmailComANotaFiscal() {
-
 		Fatura fatura = new Fatura(1000, "cliente 1");
+
 		NotaFiscal nf = gerador.gera(fatura);
-		
+
 		verify(email).enviaEmail(nf);
 	}
-	
+
 	@Test
 	public void devePersistirANotaFiscalGerada() {
 		Fatura fatura = new Fatura(1000, "cliente 1");
-		
+
 		NotaFiscal nf = gerador.gera(fatura);
-		
+
 		verify(dao).persiste(nf);
+	}
+
+	@Test
+	public void deveEnviarANotaFiscalAtravesSap() {
+		Fatura fatura = new Fatura(1000, "cliente 1");
+
+		NotaFiscal nf = gerador.gera(fatura);
+
+		verify(sap).envia(nf);
 	}
 }
