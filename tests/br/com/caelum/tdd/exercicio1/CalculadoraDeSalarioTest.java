@@ -85,7 +85,7 @@ public class CalculadoraDeSalarioTest {
 
 		double salario = calculadora.calcula(gerente);
 
-		assertEquals(1000.0 * 0.85, salario, 0.000001);
+		assertEquals(4000.0 * 0.85, salario, 0.000001);
 	}
 
 	@Test
@@ -94,7 +94,7 @@ public class CalculadoraDeSalarioTest {
 
 		double salario = calculadora.calcula(gerente);
 
-		assertEquals(1000.0 * 0.80, salario, 0.000001);
+		assertEquals(6000.0 * 0.80, salario, 0.000001);
 	}
 
 	private Funcionario umFuncionario(Cargo cargo, double salario) {
